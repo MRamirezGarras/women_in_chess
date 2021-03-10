@@ -1,10 +1,15 @@
+import pandas as pd
+import scipy.stats as stats
+import os
+from plotnine import *
+
 #read data into dataframes
-data06 = pd.read_fwf('data\JUL06FRL.TXT', delimiter=' ')
+data06 = pd.read_fwf('data\old_format\JUL06FRL.TXT', delimiter=' ')
 data06[['games','year']] = data06.GamesBorn.str.split("  ",expand=True,)#Split wrong column
 data06["year"] = pd.to_numeric(data06["year"])
 data06.dropna(subset=["Jul06"], inplace=True)
 
-data11 = pd.read_fwf('data\may11frl.txt', delimiter=' ')
+data11 = pd.read_fwf('data\old_format\may11frl.txt', delimiter=' ')
 data11[['games','year']] = data11.GamesBorn.str.split("  ",expand=True,)#Split wrong column
 data11["year"] = pd.to_numeric(data11["year"])
 data11.dropna(subset=["May10"], inplace=True)
@@ -28,46 +33,50 @@ data11_m = data11.loc[(data11.Flag != "w") & (data11.Flag != "wi")]
 data21_w = data21.loc[data21.Sex == "F"]
 data21_m = data21.loc[data21.Sex == "M"]
 
-#Proportion men/woman
+#Mean by age
+#13 years
+mean06_w_13 = data06_w.Jul06[data06_w.year > 1992].mean()
+mean06_m_13 = data06_m.Jul06[data06_m.year > 1992].mean()
 
-print("Proportion women 2006:", round(data06_w.shape[0]/data06.shape[0], 4) * 100, "%")
-print("Proportion women 2011:", round(data11_w.shape[0]/data11.shape[0], 4) * 100, "%")
-print("Proportion women 2021:", round(data21_w.shape[0]/data21.shape[0], 4) * 100, "%")
+mean11_w_13 = data11_w.May10[data11_w.year > 1997].mean()
+mean11_m_13 = data11_m.May10[data11_m.year > 1997].mean()
 
-#Mean comparisons 21
-data21_w.MAR21.mean()
-data21_m.MAR21.mean()
-stats.ttest_ind(data21_w.MAR21, data21_m.MAR21)
-print("Difference ELO 2021: ", data21_w.MAR21.mean() - data21_m.MAR21.mean())
-
-data21_w.MAR21[data21_w.year > 2000].mean()
-data21_m.MAR21[data21_m.year > 2000].mean()
-stats.ttest_ind(data21_w.MAR21[data21_w.year > 2000], data21_m.MAR21[data21_m.year > 2000])
-print("Difference ELO 2021 - young people: ", data21_w.MAR21[data21_w.year > 2000].mean() - data21_m.MAR21[data21_m.year > 2000].mean())
+mean21_w_13 = data21_w.MAR21[data21_w.year > 2007].mean()
+mean21_m_13 = data21_m.MAR21[data21_m.year > 2007].mean()
 
 
-#Mean comparisions 11
-data11_w.May10.mean()
-data11_m.May10.mean()
-stats.ttest_ind(data11_w.May10, data11_m.May10)
-print("Difference ELO 2011: ", data11_w.May10.mean() - data11_m.May10.mean())
+#15 years
+mean06_w_15 = data06_w.Jul06[data06_w.year > 1990].mean()
+mean06_m_15 = data06_m.Jul06[data06_m.year > 1990].mean()
 
+mean11_w_15 = data11_w.May10[data11_w.year > 1995].mean()
+mean11_m_15 = data11_m.May10[data11_m.year > 1995].mean()
 
-data11_w.May10[data11_w.year > 1995].mean()
-data11_m.May10[data11_m.year > 1995].mean()
-stats.ttest_ind(data11_w.May10[data11_w.year > 1995], data11_m.May10[data11_m.year > 1995])
-print("Difference ELO 2011 - young people: ", data11_w.May10[data11_w.year > 1995].mean() - data11_m.May10[data11_m.year > 1995].mean())
+mean21_w_15 = data21_w.MAR21[data21_w.year > 2005].mean()
+mean21_m_15 = data21_m.MAR21[data21_m.year > 2005].mean()
 
+#Number players by age
 
+#Data06
+data06_w[data06_w.year > 1990].shape[0]/data06[data06.year > 1990].shape[0] * 100 #15 years
+data06_w[(data06_w.year <= 1990) & (data06_w.year > 1980)].shape[0]/data06[(data06.year <= 1990) & (data06.year > 1980)].shape[0] * 100 #16 to 25
+data06_w[(data06_w.year <= 1980) & (data06_w.year > 1970)].shape[0]/data06[(data06.year <= 1980) & (data06.year > 1970)].shape[0] * 100
+data06_w[(data06_w.year <= 1970) & (data06_w.year > 1960)].shape[0]/data06[(data06.year <= 1970) & (data06.year > 1960)].shape[0] * 100
+data06_w[(data06_w.year <= 1960) & (data06_w.year > 1950)].shape[0]/data06[(data06.year <= 1960) & (data06.year > 1950)].shape[0] * 100
+data06_w[(data06_w.year <= 1950) & (data06_w.year > 1940)].shape[0]/data06[(data06.year <= 1950) & (data06.year > 1940)].shape[0] * 100
 
-#Mean comparisions 06
-data06_w.Jul06.mean()
-data06_m.Jul06.mean()
-stats.ttest_ind(data06_w.Jul06, data06_m.Jul06)
-print("Difference ELO 2006: ", data06_w.Jul06.mean() - data06_m.Jul06.mean())
+#Data11
+data11_w[data11_w.year > 1995].shape[0]/data11[data11.year > 1995].shape[0] * 100 #15 years
+data11_w[(data11_w.year <= 1995) & (data11_w.year > 1985)].shape[0]/data11[(data11.year <= 1995) & (data11.year > 1985)].shape[0] * 100 #16 to 25
+data11_w[(data11_w.year <= 1985) & (data11_w.year > 1975)].shape[0]/data11[(data11.year <= 1985) & (data11.year > 1975)].shape[0] * 100
+data11_w[(data11_w.year <= 1975) & (data11_w.year > 1965)].shape[0]/data11[(data11.year <= 1975) & (data11.year > 1965)].shape[0] * 100
+data11_w[(data11_w.year <= 1965) & (data11_w.year > 1955)].shape[0]/data11[(data11.year <= 1965) & (data11.year > 1955)].shape[0] * 100
+data11_w[(data11_w.year <= 1955) & (data11_w.year > 1945)].shape[0]/data11[(data11.year <= 1955) & (data11.year > 1945)].shape[0] * 100
 
-data06_w.Jul06[data06_w.year > 1985].mean()
-data06_m.Jul06[data06_m.year > 1985].mean()
-stats.ttest_ind(data06_w.Jul06[data06_w.year > 1985], data06_m.Jul06[data06_m.year > 1985])
-
-print("Difference ELO 2006 - young people: ", data06_w.Jul06[data06_w.year > 1985].mean() - data06_m.Jul06[data06_m.year > 1985].mean())
+#Data21
+data21_w[data21_w.year > 2005].shape[0]/data21[data21.year > 2005].shape[0] * 100 #15 years
+data21_w[(data21_w.year <= 2005) & (data21_w.year > 1995)].shape[0]/data21[(data21.year <= 2005) & (data21.year > 1995)].shape[0] * 100 #16 to 25
+data21_w[(data21_w.year <= 1995) & (data21_w.year > 1985)].shape[0]/data21[(data21.year <= 1995) & (data21.year > 1985)].shape[0] * 100
+data21_w[(data21_w.year <= 1985) & (data21_w.year > 1975)].shape[0]/data21[(data21.year <= 1985) & (data21.year > 1975)].shape[0] * 100
+data21_w[(data21_w.year <= 1975) & (data21_w.year > 1965)].shape[0]/data21[(data21.year <= 1975) & (data21.year > 1965)].shape[0] * 100
+data21_w[(data21_w.year <= 1965) & (data21_w.year > 1955)].shape[0]/data21[(data21.year <= 1965) & (data21.year > 1955)].shape[0] * 100

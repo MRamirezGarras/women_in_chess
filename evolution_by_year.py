@@ -58,3 +58,13 @@ ggplot(df_number[df_number.Sex == "Women"], aes(x="year", y="percent")) + \
     geom_bar(stat="identity", fill = "Blue") + \
     labs(x="Year", y= "Percentage women", title = "Percentage of women in chess") + \
     theme_classic()
+
+df_elo.year = pd.to_numeric(df_elo.year)
+df_elo = df_elo.sort_values("year")
+
+ggplot(df_elo, aes(x="year", y = "elo", fill="Sex")) + \
+    geom_bar(stat="identity", position = "dodge") + \
+    labs(x="Year", y="Elo", title="Elo rating") + \
+    coord_cartesian(ylim=(1000, 2100) )+ \
+    theme_classic() + \
+    theme(legend_position = (0.8, 0.8))
