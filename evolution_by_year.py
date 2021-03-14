@@ -57,6 +57,7 @@ df_number = df_number.sort_values("year")
 ggplot(df_number[df_number.Sex == "Women"], aes(x="year", y="percent")) + \
     geom_bar(stat="identity", fill = "Blue") + \
     labs(x="Year", y= "Percentage women", title = "Percentage of women in chess") + \
+    coord_cartesian(ylim=(0, 12)) + \
     theme_classic()
 
 df_elo.year = pd.to_numeric(df_elo.year)
