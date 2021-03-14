@@ -1,6 +1,4 @@
 import pandas as pd
-import scipy.stats as stats
-import os
 from plotnine import *
 
 #read data into dataframes

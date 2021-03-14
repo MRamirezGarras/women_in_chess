@@ -1,7 +1,4 @@
 import pandas as pd
-import scipy.stats as stats
-import os
-from plotnine import *
 
 #read data into dataframes
 data06 = pd.read_fwf('data\old_format\JUL06FRL.TXT', delimiter=' ')
