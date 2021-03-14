@@ -34,9 +34,16 @@ Calculates the mean rating for men and women for different age groups in differe
 
 Percentage of women in the top100 players in the world at different ages.
 
+### percentage_women_by_age
+
+Percentage of women in the total number of players at different ages.
+
 ## Conclusions
 
 The percentage of rated women in chess has duplicated in the last 15 years. However,
 the relative strength of men and women seems to have stayed the same. 
-The analysis of the top100 players by age groups shows that at young age women are represented 
-within top players in a percentage similar to the total percentage of 
+The analysis of the percentage of players by age groups shows that the percentage
+of female players decreases at older ages, and this trend has not changed in the last years.
+The number of women in the top100 players declines drastically at an age of around
+20-22 years, which suggests that women are less likely than men to try to pursue a 
+professional chess career. 
