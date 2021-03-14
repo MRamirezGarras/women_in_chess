@@ -1,4 +1,4 @@
-#Women in chess
+# Women in chess
 
 Analysis of the evolution of the number of women in chess along the last 15 years.
 
