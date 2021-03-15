@@ -30,10 +30,13 @@ data21["MAR21"] = pd.to_numeric(data21["MAR21"])
 data21["year"] = pd.to_numeric(data21["year"])
 data21["age"] = 2021 - data21["year"]
 
-#Year 21
+
+##Percentage of women in top100 players at different ages
+#Current year / 2021
+#Remove inactive players
 data21 = data21[data21.Flag != "i"]
 data21 = data21[data21.Flag != "wi"]
-ages = list(range(11, 44, 3))
+ages = list(range(11, 44, 3))#Choose ages to analyze
 df_list = []
 
 for age in ages:
@@ -42,8 +45,9 @@ for age in ages:
     data = data.head(100)
     percentage = data[data["Sex"] == "F"].shape[0]
 
-    df_list.append({"age": "under " + str(age) , "percentage": percentage, "year": 2021})
+    df_list.append({"age": "under " + str(age) , "percentage": percentage, "year": 2021})#Append info as dictionary
 
+#Past years
 #Year 16
 data16 = data16[data16.Flag != "i"]
 data16 = data16[data16.Flag != "wi"]
@@ -82,18 +86,75 @@ for age in ages:
 
     df_list.append({"age": "under " + str(age) , "percentage": percentage, "year": 2006})
 
+#convert list of dictionaries into dataframe
 df = pd.DataFrame(df_list, columns= ["age", "percentage", "year"])
 
+#Plot data for 2021
 ggplot(df[df.year == 2021], aes(x="age", y="percentage")) + \
     geom_bar(stat="identity", fill = "Blue") + \
     labs(x="Age", y= "Percentage women", title = "Percentage of women in top 100 players - 2021") + \
     theme_classic() + \
     theme(axis_text_x=element_text(rotation=45, hjust=1))
 
-
+#Plot all data
 ggplot(df, aes(x="age", y="percentage")) + \
     geom_bar(stat="identity", fill = "Blue") + \
     labs(y= "Percentage women", title = "Percentage of women in top 100 players") + \
+    theme_classic() + \
+    theme(axis_text_x=element_text(rotation=45, hjust=1)) + \
+    facet_wrap ("~year")
+
+
+#Percentage of women in total number of players at different ages
+
+df_list = []
+#Year 21
+for age in ages:
+    data = data21[data21["age"] < age]
+    percentage = data[data["Sex"] == "F"].shape[0] / data.shape[0]
+
+    df_list.append({"age": "under " + str(age) , "percentage": percentage, "year": 2021})
+
+#Year 16
+data16 = data16[data16.Flag != "i"]
+data16 = data16[data16.Flag != "wi"]
+
+for age in ages:
+    data = data16[data16["age"] < age]
+    percentage = data[data["Sex"] == "F"].shape[0] / data.shape[0]
+
+    df_list.append({"age": "under " + str(age) , "percentage": percentage, "year": 2016})
+
+#Year 11
+data11 = data11[data11.Flag != "i"]
+data11 = data11[data11.Flag != "wi"]
+
+
+for age in ages:
+    data = data11[data11["age"] < age]
+    percentage = data[data["Flag"] == "w"].shape[0] / data.shape[0]
+
+    df_list.append({"age": "under " + str(age) , "percentage": percentage, "year": 2011})
+
+
+#Year 06
+data06 = data06[data06.Flag != "i"]
+data06 = data06[data06.Flag != "wi"]
+
+for age in ages:
+    data = data06[data06["age"] < age]
+    percentage = data[data["Flag"] == "w"].shape[0] / data.shape[0]
+
+
+    df_list.append({"age": "under " + str(age) , "percentage": percentage, "year": 2006})
+
+#Convert list of dictionarys into dataframe
+df = pd.DataFrame(df_list, columns= ["age", "percentage", "year"])
+
+#Plot data
+ggplot(df, aes(x="age", y="percentage")) + \
+    geom_bar(stat="identity", fill = "Blue") + \
+    labs(y= "Percentage women", title = "Percentage of women in chess") + \
     theme_classic() + \
     theme(axis_text_x=element_text(rotation=45, hjust=1)) + \
     facet_wrap ("~year")
