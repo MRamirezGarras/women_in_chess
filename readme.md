@@ -33,9 +33,6 @@ Calculates the mean rating for men and women for different age groups in differe
 ### top_100.py
 
 Percentage of women in the top100 players in the world at different ages.
-
-### percentage_women_by_age
-
 Percentage of women in the total number of players at different ages.
 
 ## Conclusions
