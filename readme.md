@@ -35,6 +35,10 @@ Calculates the mean rating for men and women for different age groups in differe
 Percentage of women in the top100 players in the world at different ages.
 Percentage of women in the total number of players at different ages.
 
+### women_in_chess.ipynb
+
+Code from evolution_by_year.py and top_100.py in Jupyter notebook format
+
 ## Conclusions
 
 The percentage of rated women in chess has duplicated in the last 15 years. However,
