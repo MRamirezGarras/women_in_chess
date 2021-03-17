@@ -92,14 +92,14 @@ df = pd.DataFrame(df_list, columns= ["age", "percentage", "year"])
 #Plot data for 2021
 ggplot(df[df.year == 2021], aes(x="age", y="percentage")) + \
     geom_bar(stat="identity", fill = "Blue") + \
-    labs(x="Age", y= "Percentage women", title = "Percentage of women in top 100 players - 2021") + \
+    labs(x="Age", y= "Number of women", title = "Number of women in top 100 players - 2021") + \
     theme_classic() + \
     theme(axis_text_x=element_text(rotation=45, hjust=1))
 
 #Plot all data
 ggplot(df, aes(x="age", y="percentage")) + \
     geom_bar(stat="identity", fill = "Blue") + \
-    labs(y= "Percentage women", title = "Percentage of women in top 100 players") + \
+    labs(y= "Number of women", title = "Number of women in top 100 players") + \
     theme_classic() + \
     theme(axis_text_x=element_text(rotation=45, hjust=1)) + \
     facet_wrap ("~year")
